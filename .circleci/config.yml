@@ -8,9 +8,8 @@ jobs:
       image: ubuntu-2004:current
     steps:
       - checkout
-      - run:
-        name: jest-tests
-        command: |
+      - name: jest jest-test
+      - run: |
           npm install
           npm run jest
 
