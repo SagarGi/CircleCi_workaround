@@ -21,3 +21,4 @@ workflows:
   calc-workflow:
     jobs:
       - jest-test
+      - jest-test
