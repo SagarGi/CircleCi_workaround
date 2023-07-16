@@ -1,6 +1,10 @@
 # this is circle CI configuration file
 
 version: 2.1
+commands:
+  package-installation-command:
+    steps:
+      - run: npm install
 
 jobs:
   jest-test:
@@ -9,12 +13,9 @@ jobs:
     working_directory: ~/calculator
     steps:
       - checkout
+      - package-installation-command
       - run: |
-            name: Install Dependencies
-            npm install
-      - run: |
-            name: Run unit tests
-            npm run test
+          npm run test
 
 workflows:
   calc-workflow:
