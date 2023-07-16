@@ -1,0 +1,25 @@
+{
+  "name": "circleci_workaround",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SagarGi/CircleCi_workaround.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SagarGi/CircleCi_workaround/issues"
+  },
+  "homepage": "https://github.com/SagarGi/CircleCi_workaround#readme",
+  "dependencies": {
+    "jest": "^29.6.1"
+  }
+}
