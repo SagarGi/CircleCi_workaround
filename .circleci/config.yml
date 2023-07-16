@@ -6,12 +6,13 @@ jobs:
   jest-test:
     machine:
       image: ubuntu-2004:current
+    working_directory: ~/calculator
     steps:
       - checkout
       - run: |
             pwd
             npm install
-            npm run jest
+            npm run test
 
 workflows:
   calc-workflow:
