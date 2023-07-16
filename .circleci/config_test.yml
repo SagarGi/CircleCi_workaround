@@ -1,0 +1,24 @@
+# this is circle CI configuration file
+
+version: 2.1
+commands:
+  package-installation-command:
+    steps:
+      - run: npm install
+
+jobs:
+  jest-test:
+    machine:
+      image: ubuntu-2004:current
+    working_directory: ~/calculator
+    steps:
+      - checkout
+      - package-installation-command
+      - run: |
+          npm run test
+
+workflows:
+  calc-workflow:
+    jobs:
+      - jest-test
+      - jest-test

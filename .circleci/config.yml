@@ -1,24 +1,72 @@
-# this is circle CI configuration file
+# configure ocis and run one test
 
 version: 2.1
-commands:
-  package-installation-command:
-    steps:
-      - run: npm install
+
+executors:
+  ubuntu-executor:
+    machine:
+      image: ubuntu-2204:2023.04.2
 
 jobs:
-  jest-test:
-    machine:
-      image: ubuntu-2004:current
-    working_directory: ~/calculator
+  build-ocis:
+    executor: ubuntu-executor
+    working_directory: ~/www
     steps:
-      - checkout
-      - package-installation-command
-      - run: |
-          npm run test
+      - run:
+          name: Install Go
+          command: |
+            sudo apt-get update
+            wget https://dl.google.com/go/go1.20.linux-amd64.tar.gz
+            sudo tar -C /usr/local -xzf go1.20.linux-amd64.tar.gz
+            export PATH="/usr/local/go/bin:$PATH"
+            go version
+
+      - run:
+          name: Install Node.js
+          command: |
+            curl -fsSL https://nodejs.org/dist/v18.15.0/node-v18.15.0-linux-x64.tar.gz -o node.tar.gz
+            tar -xzf node.tar.gz
+            sudo mv node-v18.15.0-linux-x64 /usr/local/node
+            sudo ln -sf /usr/local/node/bin/node /usr/bin/node
+            sudo ln -sf /usr/local/node/bin/npm /usr/bin/npm
+            sudo ln -sf /usr/local/node/bin/npx /usr/bin/npx
+            npm install -g pnpm@latest
+            node --version
+            npm --version
+            pnpm --version
+
+      - run:
+          name: Clone ocis
+          command: |
+            git clone https://github.com/owncloud/ocis.git
+
+      - run:
+          name: Generate and Build ocis
+          command: |
+            pwd
+            ls
+            cd ocis
+            make clean
+            make generate
+            cd ocis
+            make clean
+            make build
+            ls
+
+      - run:
+          name: Run ocis
+          command: |
+            pwd
+            cd ocis
+            IDM_ADMIN_PASSWORD=admin ocis/bin/ocis init --insecure true
+            OCIS_INSECURE=true PROXY_ENABLE_BASIC_AUTH=true ocis/bin/ocis server &
+
+      - run:
+          name: Wait for ocis server
+          command: |
+            while ! curl -s https://localhost:9200 > /dev/null; do sleep 1; done
 
 workflows:
-  calc-workflow:
+  acceptance-tests:
     jobs:
-      - jest-test
-      - jest-test
+      - build-ocis
