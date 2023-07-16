@@ -9,8 +9,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          name: Run test Tests
-          command: |
+            pwd
             npm install
             npm run jest
 
