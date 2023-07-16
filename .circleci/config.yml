@@ -10,8 +10,10 @@ jobs:
     steps:
       - checkout
       - run: |
-            pwd
+            name: Install Dependencies
             npm install
+      - run: |
+            name: Run unit tests
             npm run test
 
 workflows:
