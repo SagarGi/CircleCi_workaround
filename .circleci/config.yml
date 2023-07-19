@@ -59,7 +59,8 @@ jobs:
             pwd
             cd ocis
             IDM_ADMIN_PASSWORD=admin ocis/bin/ocis init --insecure true
-            OCIS_INSECURE=true PROXY_ENABLE_BASIC_AUTH=true ocis/bin/ocis server &
+            OCIS_INSECURE=true PROXY_ENABLE_BASIC_AUTH=true ocis/bin/ocis server
+          background: true
 
       - run:
           name: Wait for ocis server
