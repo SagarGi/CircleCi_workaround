@@ -1,14 +1,6 @@
 # this is circle CI configuration file
 
 version: 2.1
-commands:
-  Install Dependencies:
-    steps:
-      - run:
-          name: Install Packages
-          command: |
-            npm install
-
 jobs:
   build-test:
     machine:
@@ -16,7 +8,10 @@ jobs:
     working_directory: ~/calculator
     steps:
       - checkout
-      - Install Dependencies:
+      - run:
+          name: Install Packages
+          command: |
+            npm install
       - run:
           name: Run tests
           command: |
