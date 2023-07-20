@@ -28,14 +28,10 @@ jobs:
             npm run deploy
 
 workflows:
+  version: 2
   calc-workflow:
     jobs:
-      - build-test:
-          filters:
-            branches:
-              only:
-                - pull-request
-                - master
+      - build-test
       - deploy:
           requires:
             - build-test
