@@ -35,9 +35,9 @@ workflows:
             branches:
               only:
                 - pull-request
-                - master
-
       - deploy:
+          requires:
+            - build-test
           filters:
             branches:
               only:
