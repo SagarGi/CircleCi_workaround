@@ -1,0 +1,50 @@
+# This is just the example between the machine and docker as executer
+# ubuntu executor
+version: 2.1
+jobs:
+  build:
+    machine:
+      image: ubuntu-2004:202106-01
+
+    steps:
+      - checkout
+      - run:
+          name: Install Go and run go server
+          command: |
+          # your commands to install go and run go server
+
+      - run:
+          name: Install PHP and dependencies
+          command: |
+          # your command for installing php and dependencies
+
+      # Run Go server (assuming your Go server is in main.go)
+      - run:
+          name: Run Go server
+          command: |
+          # command to run go server
+
+      - run:
+          name: Run PHP test
+          command: |
+          # Run your PHP test command here
+
+# docker executor
+# version: 2.1
+# jobs:
+#   build:
+#     docker:
+#       - image: golang:latest # Go image
+#       - image: php:latest   # PHP image
+
+#     steps:
+#       - checkout
+#       - run:
+#           name: Run Go server
+#           command: |
+#           # just build and run go server
+
+#       - run:
+#           name: Run PHP test
+#           command: |
+#           # Run your PHP test command here

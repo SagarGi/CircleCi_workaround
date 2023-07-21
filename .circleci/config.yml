@@ -1,11 +1,41 @@
+# this is circle CI configuration file
+
 version: 2.1
 jobs:
-  build:
-    docker:
-      - image: owncloud/ocis:latest
+  build-test:
+    machine:
+      image: ubuntu-2004:current
+    working_directory: ~/calculator
     steps:
+      - checkout
       - run:
-          name: Wait for ocis server
+          name: Install Packages
           command: |
-            timeout 30 bash -c 'while ! curl -k -s https://localhost:9200; do sleep 1; done'
-            echo "Found"
+            npm install
+      - run:
+          name: Run tests
+          command: |
+            npm run test
+
+  deploy:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Deploy your application
+          command: |
+            npm run deploy
+
+workflows:
+  version: 2
+  calc-workflow:
+    jobs:
+      - build-test
+      - deploy:
+          requires:
+            - build-test
+          filters:
+            branches:
+              only:
+                - master
