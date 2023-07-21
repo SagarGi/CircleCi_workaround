@@ -17,8 +17,25 @@ jobs:
           command: |
             npm run test
 
+  deploy:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Deploy your application
+          command: |
+            npm run deploy
+
 workflows:
   version: 2
   calc-workflow:
     jobs:
       - build-test
+      - deploy:
+          requires:
+            - build-test
+          filters:
+            branches:
+              only:
+                - master
