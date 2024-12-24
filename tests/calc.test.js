@@ -1,4 +1,4 @@
-const { sum, subtract, times, divide } = require("../modules/calcHelper");
+const { sum, subtract, times, divide, multiply } = require("../modules/calcHelper");
 
 describe("calculator ", () => {
   describe("Addition", () => {
@@ -13,6 +13,12 @@ describe("calculator ", () => {
     });
     test("sum of 2 + 5 equals 7", () => {
       expect(sum(2, 5)).toBe(7);
+    });
+  });
+
+  describe("multiplication", () => {
+    test("mul of 1 * 2 equals 2", () => {
+      expect(multiply(1, 2)).toBe(2);
     });
   });
 });
