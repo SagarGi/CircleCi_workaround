@@ -2,10 +2,7 @@ name: Github Actions CI Demo
 
 on:
   push:
-    branches: [ main ]
-
-  pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   run-unit-test:
